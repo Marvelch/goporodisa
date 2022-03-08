@@ -235,7 +235,7 @@ class NomorHPController extends Controller
                 $userkey = 'f716e2ce24d9';
                 $passkey = '965c7bbb3c5d03f50c45c78e';
                 $telepon =  $request->phone;
-                $message = 'GOPORODISA '.$getRandom.' KONFIRMASI LAYANAN.';
+                $message = 'Plgn Yth, permintaan '.$getRandom.' digunakan utk perubahan nomor telepon pada goporodisa';
                 $url = 'https://console.zenziva.net/wareguler/api/sendWA/';
                 $curlHandle = curl_init();
                 curl_setopt($curlHandle, CURLOPT_URL, $url);
@@ -253,6 +253,37 @@ class NomorHPController extends Controller
                 ));
                 $results = json_decode(curl_exec($curlHandle), true);
                 curl_close($curlHandle);
+
+                // Handle resend menggunakan whatsapp 
+                if($results['status'] != 1)
+                {
+                    $url = 'https://console.zenziva.net/wareguler/api/sendWA/';
+                    $curlHandle = curl_init();
+                    curl_setopt($curlHandle, CURLOPT_URL, $url);
+                    curl_setopt($curlHandle, CURLOPT_HEADER, 0);
+                    curl_setopt($curlHandle, CURLOPT_RETURNTRANSFER, 1);
+                    curl_setopt($curlHandle, CURLOPT_SSL_VERIFYHOST, 2);
+                    curl_setopt($curlHandle, CURLOPT_SSL_VERIFYPEER, 0);
+                    curl_setopt($curlHandle, CURLOPT_TIMEOUT,30);
+                    curl_setopt($curlHandle, CURLOPT_POST, 1);
+                    curl_setopt($curlHandle, CURLOPT_POSTFIELDS, array(
+                        'userkey' => $userkey,
+                        'passkey' => $passkey,
+                        'to' => $telepon,
+                        'message' => $message
+                    ));
+                    $results_wa = json_decode(curl_exec($curlHandle), true);
+                    curl_close($curlHandle);
+
+                    /* Handle kesalahan pengiriman OTP */
+                    if($results_wa['status'] != 1)
+                    {
+                        DB::rollback();
+
+                        Alert::error('Gagal','Kesalahan Pengiriman Kode OTP');
+                        return back();
+                    }
+                }
 
                 User::where('id',Auth::User()->id)->update([
                     'phone'             => $request->phone,
@@ -283,8 +314,11 @@ class NomorHPController extends Controller
             Alert::success('Sukses','Periksa Kode OTP Pada Kontak SMS');
             return redirect('/ka_nomor_hp/nomor_hp');
         } catch (\Throwable $th) {
-            //throw $th;
+            
             DB::rollback();
+            
+            Alert::error('Gagal','Perubahaan Nomor HP Pengguna Bermasalah');
+            return back();
         }
     }
 
@@ -307,7 +341,7 @@ class NomorHPController extends Controller
             $userkey = 'f716e2ce24d9';
             $passkey = '965c7bbb3c5d03f50c45c78e';
             $telepon =  $request->phone;
-            $message = 'GOPORODISA '.$getRandom.' KONFIRMASI LAYANAN.';
+            $message = 'Plgn Yth, permintaan '.$getRandom.' digunakan utk perubahan nomor telepon pada goporodisa';
             $url = 'https://console.zenziva.net/wareguler/api/sendWA/';
             $curlHandle = curl_init();
             curl_setopt($curlHandle, CURLOPT_URL, $url);
@@ -325,6 +359,37 @@ class NomorHPController extends Controller
             ));
             $results = json_decode(curl_exec($curlHandle), true);
             curl_close($curlHandle);
+
+            // Handle resend menggunakan whatsapp 
+            if($results['status'] != 1)
+            {
+                $url = 'https://console.zenziva.net/wareguler/api/sendWA/';
+                $curlHandle = curl_init();
+                curl_setopt($curlHandle, CURLOPT_URL, $url);
+                curl_setopt($curlHandle, CURLOPT_HEADER, 0);
+                curl_setopt($curlHandle, CURLOPT_RETURNTRANSFER, 1);
+                curl_setopt($curlHandle, CURLOPT_SSL_VERIFYHOST, 2);
+                curl_setopt($curlHandle, CURLOPT_SSL_VERIFYPEER, 0);
+                curl_setopt($curlHandle, CURLOPT_TIMEOUT,30);
+                curl_setopt($curlHandle, CURLOPT_POST, 1);
+                curl_setopt($curlHandle, CURLOPT_POSTFIELDS, array(
+                    'userkey' => $userkey,
+                    'passkey' => $passkey,
+                    'to' => $telepon,
+                    'message' => $message
+                ));
+                $results_wa = json_decode(curl_exec($curlHandle), true);
+                curl_close($curlHandle);
+
+                /* Handle kesalahan pengiriman OTP */
+                if($results_wa['status'] != 1)
+                {
+                    DB::rollback();
+
+                    Alert::error('Gagal','Kesalahan Pengiriman Kode OTP');
+                    return back();
+                }
+            }
 
             User::where('id',Auth::User()->id)->update([
                 'otp_code'          => $getRandom,
@@ -356,8 +421,11 @@ class NomorHPController extends Controller
             Alert::success('Sukses','Periksa Kode OTP Pada Kontak SMS');
             return redirect('/ka_nomor_hp/nomor_hp');
         } catch (\Throwable $th) {
-            //throw $th;
+
             DB::rollback();
+            Alert::error('Gagal','Perubahaan Nomor Telepon Bermasalah');
+
+            return back();
         }
     }
 }

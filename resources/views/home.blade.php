@@ -102,7 +102,8 @@
                                     </tr>
                                     @else
                                     <th scope="row">Alamat Rumah</th>
-                                    <td>Kecamatan {{$getAlamat->Lokasis->nama_desa}}, {{$getAlamat->alamat}} - <a class="small" href="{{URL('ka_alamat/alamat')}}">UBAH</a></td>
+                                    <td>Kecamatan {{$getAlamat->Lokasis->nama_desa}}, {{$getAlamat->alamat}} - <a
+                                            class="small" href="{{URL('ka_alamat/alamat')}}">UBAH</a></td>
                                     </tr>
                                     @endif
                                     <tr>

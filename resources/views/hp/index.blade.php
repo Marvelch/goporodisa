@@ -20,9 +20,9 @@
     <!-- ======= Portfolio Details Section ======= -->
     <section id="portfolio-details" class="portfolio-details mt-5 mb-2" style="padding-bottom: 15%;">
         <div class="container">
-            <div class="alert alert-primary mb-5" role="alert">
-                PEMBERITAHUAN - Layanan OTP akan mengalami gangguan, sebagai solusi kami mengalikan layanan OTP ke
-                Whatsapp <i>(Sementara)</i>
+            <div class="alert alert-primary mb-5 text-capitalize" role="alert">
+                PEMBERITAHUAN - Layanan OTP akan mengalami gangguan, periksa kontak sms atau whatsapp untuk kode OTP
+                pengguna.
             </div>
             <div class="row">
                 <div class="col-md-5">
@@ -76,7 +76,10 @@
                                     </small>
                                     @enderror
                                     <div class="form-group mt-1">
-                                        <small>Belum menerima kode otp ? <a href="{{URL('ka_nomor_hp/permintaan_otp')}}">Kirim Ulang</a> - <a href="{{URL('/ka_nomor_hp/nomor_hp/'.$getOTP->id.'/edit')}}">Ganti
+                                        <!-- <small>Belum menerima kode otp ? <a href="{{URL('ka_nomor_hp/permintaan_otp')}}">Kirim Ulang</a> - <a href="{{URL('/ka_nomor_hp/nomor_hp/'.$getOTP->id.'/edit')}}">Ganti
+                                                Nomor HP</a></small> -->
+                                        <small>Bermasalah dengan nomor telepon ? <a
+                                                href="{{URL('/ka_nomor_hp/nomor_hp/'.$getOTP->id.'/edit')}}">Ganti
                                                 Nomor HP</a></small>
                                     </div>
                                 </div>

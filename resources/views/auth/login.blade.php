@@ -9,8 +9,9 @@
                 <div class="row m-5">
                     <div class="col-md-5 text-center mt-2">
                         <!-- <img src="{{asset('assets/img/login.gif')}}" alt="" srcset="" style="width: 100%;"> -->
-                        <h1 class="font-weight-bold mt-5 text-primary">LOGIN</h1>
-                        <p class="text-capitalize pt-2"><small>mengakses semua layanan goporodisa</small></p>
+                        <h1 class="font-weight-bold mt-5 text-primary">Goporodisa</h1>
+                        <!-- <p class="text-capitalize pt-2"><small>mengakses semua layanan goporodisa</small></p> -->
+                        <p class="pt-2"><small class="font-weight-bold">Login untuk mengakses semua layanan goporodisa</small></p>
                     </div>
                     <div class="col-md-7 mt-3">
                         <div class="card-body">
@@ -34,7 +35,8 @@
                                 </div>
 
                                 <div class="form-group row">
-                                    <label for="password" class="col-md-3 col-form-label text-md-left">Kata Sandi</label>
+                                    <label for="password" class="col-md-3 col-form-label text-md-left">Kata
+                                        Sandi</label>
 
                                     <div class="col-md-8">
                                         <input id="password" type="password"
@@ -52,17 +54,21 @@
                                 <div class="form-group row">
                                     <div class="col-md-8 offset-md-3">
                                         @if (Route::has('password.request'))
-                                        <small>Tidak bisa login ? <a href="{{ route('password.request') }}">Lupa Password</a> / <a href="{{URL('register')}}">Register Baru</a></small>
+                                        <small>Tidak bisa login ? <a href="{{ route('password.request') }}">Lupa
+                                                Password</a> / <a href="{{URL('register')}}">Register Baru</a></small>
                                         @endif
                                     </div>
                                 </div>
 
                                 <div class="form-group row mb-0">
-                                    <div class="col-md-8">
+                                    <div class="col-md-12">
                                         <button type="submit" class="btn btn-primary">
                                             <span class="ml-2 mr-2">Login</span>
                                         </button>
                                     </div>
+                                    <!-- <div class="col-md-12 mt-4">
+                                        <a href="{{URL('/')}}" class="small font-weight-bold">Ingin mencari produk terbaru ? Yuk kembali</a>
+                                    </div> -->
                                 </div>
                             </form>
                         </div>
